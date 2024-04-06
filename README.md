@@ -27,7 +27,7 @@ Or you can run `make` to compile it from source code (make sure you have `libsdl
 
 # References
 <ul>
-    <li>[Cowgod's Chip-8 Technical Reference v1.0](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM)</li>
-    <li>[CHIP-8 Wikipedia](https://en.wikipedia.org/wiki/CHIP-8)</li>
-    <li>[How to write an emulator (CHIP-8 interpreter)](https://multigesture.net/articles/how-to-write-an-emulator-chip-8-interpreter/)</li>
+    <li><a href="http://devernay.free.fr/hacks/chip8/C8TECH10.HTM">Cowgod's Chip-8 Technical Reference v1.0</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/CHIP-8">CHIP-8 Wikipedia</a></li>
+    <li><a href="https://multigesture.net/articles/how-to-write-an-emulator-chip-8-interpreter/">How to write an emulator (CHIP-8 interpreter)</a></li>
 </ul>
