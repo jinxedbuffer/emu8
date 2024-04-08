@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
     CPU cpu;
     cpu.init();
     if(cpu.load_rom(argv[1])) {
-        gfx screen;
+        GFX screen;
         if(screen.init()) {
             while(!screen.qf) {
                 cpu.execute();
@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
                 if(cpu.df) {
                     screen.draw(cpu.disp);
                 }
-                usleep(16666);
+                usleep(1000000/CLOCK_SPEED);
             }
         screen.destroy();
         }

@@ -13,7 +13,7 @@ SDL_Scancode controlkeymap[KEYPAD_SIZE] = {
     SDL_SCANCODE_4, SDL_SCANCODE_R, SDL_SCANCODE_F, SDL_SCANCODE_V
 };
 
-bool gfx::init() {
+bool GFX::init() {
     window = NULL;
     renderer = NULL;
     qf = false;
@@ -31,7 +31,7 @@ bool gfx::init() {
     return true;
 }
 
-void gfx::eventhandler(uint8_t key[]) {
+void GFX::eventhandler(uint8_t key[]) {
     SDL_Event e;
     if(SDL_PollEvent(&e)) {
         const uint8_t* state = SDL_GetKeyboardState(NULL);
@@ -45,7 +45,7 @@ void gfx::eventhandler(uint8_t key[]) {
     }
 }
 
-void gfx::draw(uint8_t* disp) {
+void GFX::draw(uint8_t* disp) {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -64,7 +64,7 @@ void gfx::draw(uint8_t* disp) {
     SDL_RenderPresent(renderer);
 }
 
-void gfx::destroy() {
+void GFX::destroy() {
     SDL_DestroyWindow(window);
     SDL_Quit();
 }

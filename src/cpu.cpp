@@ -2,6 +2,7 @@
 #include<fstream>
 #include<cstdlib>
 #include "cpu.h"
+#include "beeper.h"
 
 const uint8_t fontset[80] =
     {
@@ -23,8 +24,9 @@ const uint8_t fontset[80] =
         0xF0, 0x80, 0xF0, 0x80, 0x80  // F
     };
 
+Beeper b;
+
 void CPU::init() {
-    std::cout << "Initializing CPU...\n";
     opcode = 0;
     for(int i = 0x000; i < 0x50; i++) {
         memory[i] = fontset[i];
@@ -54,39 +56,28 @@ void CPU::init() {
 
 bool CPU::load_rom(const char* filename) {
     FILE* rom = fopen(filename, "rb");
-    std::cout << "Loading " << filename << "... ";
     if(!rom) {
         std::cout << "Failed! Cannot open file.\n";
         return false;
-    } else {
-        std::cout << "Successful.\n";
     }
     fseek(rom, 0, SEEK_END);
     long filesize = ftell(rom);
     rewind(rom);
-    std::cout << "Filesize: " << filesize << "B\n";
     uint8_t* buffer = (uint8_t*)malloc(sizeof(uint8_t)*filesize);
     if(!buffer) {
         std::cout << "Failed! Cannot allocate memory.\n";
         return false;
-    } else {
-        std::cout << "Successfully allocated memory...\n";
     }
     size_t read_bytes = fread(buffer, 1, filesize, rom);
     if(read_bytes!=(size_t)filesize) {
         std::cout << "Failed! Reading error.\n";
         return false;
-    } else {
-        std::cout << "Successfully read file...\n";
     }
     fclose(rom);
     if(MEMORY_SIZE - ROM_START >= filesize) {
         for(int i = 0; i < filesize; i++) {
             memory[ROM_START + i] = buffer[i];
         }
-        std::cout << "Loaded buffer into memory...\n";
-    } else {
-        std::cout << "File is too big for memory! Max size allowed: 3.5KB.\n";
     }
     free(buffer);
     return true;
@@ -273,6 +264,7 @@ void CPU::execute() {
                 pc += 2;
             } else if(n4 == 0xE) { // 0xFx1E
                 I += V[n2];
+                pc += 2;
             }
         } else if(n3 == 0x2 && n4 == 0x9) { // 0xFx29
             I = V[n2] * 0x5;
@@ -301,9 +293,10 @@ void CPU::execute() {
         dt--;
     }
     if(st > 0) {
-        if(st == 1) {
-            std::cout << "Beep!\n";
-        }
+        b.beep(BEEP_FREQUENCY, 17);
         st--;
+    }
+    if(DEBUG_MODE == 1) {
+        printf("[OK] Executed opcode: 0x%X\n", opcode);
     }
 }

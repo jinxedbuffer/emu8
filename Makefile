@@ -2,8 +2,8 @@ CC = g++
 CFLAGS = -Wall -Wextra -std=c++17
 INC = -I/usr/include -Isrc/include
 LIBS = -lSDL2
-SRC = src/main.cpp src/cpu.cpp src/gfx.cpp
-OBJ = main.o cpu.o gfx.o
+SRC = src/main.cpp src/cpu.cpp src/gfx.cpp src/beeper.cpp
+OBJ = main.o cpu.o gfx.o beeper.o
 
 all: emu8 clean
 
@@ -17,6 +17,9 @@ cpu.o: src/cpu.cpp
 	$(CC) $(CFLAGS) $(INC) $(LIBS) -c $< -o $@
 
 gfx.o: src/gfx.cpp
+	$(CC) $(CFLAGS) $(INC) $(LIBS) -c $< -o $@
+
+beeper.o: src/beeper.cpp
 	$(CC) $(CFLAGS) $(INC) $(LIBS) -c $< -o $@
 
 clean:
